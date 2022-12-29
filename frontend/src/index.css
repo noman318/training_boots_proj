@@ -1,0 +1,48 @@
+main {
+  min-height: 88vh;
+  flex: 1;
+}
+a {
+  color: #ffff;
+  text-decoration: none;
+}
+/* .site_container{
+  min-height: 100vh;
+} */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.product {
+  border: 1px #404040 solid;
+  margin: 1rem;
+}
+.product img {
+  width: 100%;
+  max-width: 400px;
+}
+.btn-primary {
+  background-color: #f0c040;
+  color: black;
+}
+.product_info {
+  padding: 1rem;
+}
+.rating {
+  color: #ffcc00;
+}
+.numReviews {
+  color: black;
+  font-size: large;
+  margin-left: 0.5rem;
+}
+.image_large {
+  max-width: 100%;
+}
+.desc_style {
+  font-size: 1.2rem;
+}
+.badge_text {
+  font-size: 1.6rem;
+}
