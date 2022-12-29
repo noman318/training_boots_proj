@@ -50,6 +50,7 @@ const getProducts = () => {
 };
 
 const addProduct = (data) => {
+  console.log("data", data);
   console.log("0000000000000000000000000");
   return axios.post(`${apiURL}products`, data);
 };

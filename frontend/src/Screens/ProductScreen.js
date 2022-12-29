@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from "react";
 import { Col, Row, ListGroup, Card, Badge, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Rating from "../components/Rating";
 import { Helmet } from "react-helmet-async";
 
 const reducer = (state, action) => {
@@ -63,10 +62,6 @@ export const ProductScreen = () => {
               </Helmet>
               <h2>{product.name}</h2>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <Rating rating={product.rating} numReviews={product.numReviews} />
-            </ListGroup.Item>
-            {/* <hr /> */}
             <ListGroup.Item>
               <h5>
                 Price: <strong>Rs.{product.price}</strong>

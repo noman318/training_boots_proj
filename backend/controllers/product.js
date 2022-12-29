@@ -38,14 +38,12 @@ async function saveProduct(req, res) {
     const url = req.protocol + '://' + req.get('host') + '/Images/' + req.file.filename
     const data={...requestBody,'imageURL':url}
     console.log(data)
-    
-
     const product = new Product(data)
     try {
         const savedProduct = await product.save();
-        res.send({"err":0,"msg":"Product Added"}); 
+        res?.send({"err":0,"msg":"Product Added"}); 
     }  catch(ex) {
-        return res.send({"err":1,"msg":ex.message});
+        return res?.send({"err":1,"msg":ex.message});
     }
 }
 

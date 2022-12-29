@@ -1,26 +1,50 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { isAdmin, deleteProducts } from "../services/MyData";
+import { toast } from "react-toastify";
 
-const Product = (props) => {
-  const { product } = props;
+const Product = ({prodata, filterProduct }) => {
+  const navigate = useNavigate();
+
+  const editProductClick = (_id) => {
+    navigate(`/editproducts/${prodata._id}`);
+  };
+
+  const getProdById = (id) => {
+    console.log("getbyId");
+    navigate(`/products/${id}`);
+  };
+
+  const deleteProduct = (id) => {
+    console.log("delete Products");
+    if (window.confirm("Do you want to delete ?")) {
+      deleteProducts(id).then((res) => {
+        if (res.data) {
+          console.log("res.data", res.data);
+          toast.error("Product Deleted");
+          filterProduct(id);
+        }
+      });
+    }
+  };
   return (
     <Card>
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/product/${prodata._id}`}>
         <Card.Img
-          className="card-img-top"
-          src={product.image}
-          alt={product.name}
+          className="card-img-top width"
+          src={prodata.imageURL}
+          alt={prodata.name}
         />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
-          <Card.Title>{product.name}</Card.Title>
+        <Link to={`/product/${prodata._id}`}>
+          <Card.Title>{prodata.name}</Card.Title>
         </Link>
       </Card.Body>
       <div className="product_info">
         <Card.Text>
-          <strong>Rs. {product.price}</strong>
+          <strong>Rs. {prodata.price}</strong>
         </Card.Text>
         <Button>Add to Cart</Button>
       </div>

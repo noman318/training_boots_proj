@@ -13,8 +13,11 @@ function Header() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
+        <LinkContainer to='/addproduct'>
+          <Nav.Link>AddProduct</Nav.Link>
+        </LinkContainer>
             <Nav.Link to="/">Features</Nav.Link>
-            <Nav.Link to="#pricing">Pricing</Nav.Link>
+            {/* <Nav.Link to="/addproduct">Add Product</Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link to="/"><i className="fa-solid fa-cart-shopping"></i>   Cart</Nav.Link>

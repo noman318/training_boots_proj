@@ -18,7 +18,7 @@ a {
   border: 1px #404040 solid;
   margin: 1rem;
 }
-.product img {
+.product_img {
   width: 100%;
   max-width: 400px;
 }
@@ -45,4 +45,7 @@ a {
 }
 .badge_text {
   font-size: 1.6rem;
+}
+.width{
+  width: 10rem;
 }
