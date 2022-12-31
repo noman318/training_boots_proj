@@ -46,6 +46,9 @@ a {
 .badge_text {
   font-size: 1.6rem;
 }
-.width{
+.width {
   width: 10rem;
+}
+.form_label {
+  font-size: 1.5rem;
 }

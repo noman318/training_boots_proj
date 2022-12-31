@@ -26,7 +26,7 @@ export const HomeScreen = () => {
   return (
     <div>
       <h2>Featured products</h2>
-      <div className="products">
+      <div>
         <Row>
           {proData.map((pro) => (
             <Col key={pro._id} sm={6} md={4} lg={3} className="mb-3">

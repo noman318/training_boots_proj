@@ -41,7 +41,7 @@ const isAdmin = () => {
 
 const doLogout = () => {
   localStorage.removeItem("_token");
-  window.location = "/";
+  window.location = "/login";
   // navigate("/");
 };
 

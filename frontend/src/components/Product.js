@@ -1,19 +1,20 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isAdmin, deleteProducts } from "../services/MyData";
 import { toast } from "react-toastify";
 
-const Product = ({prodata, filterProduct }) => {
+const Product = ({ prodata, filterProduct }) => {
   const navigate = useNavigate();
 
   const editProductClick = (_id) => {
-    navigate(`/editproducts/${prodata._id}`);
+    navigate(`/editproduct/${prodata._id}`);
   };
 
-  const getProdById = (id) => {
-    console.log("getbyId");
-    navigate(`/products/${id}`);
+  const addToCart = () => {
+    console.log("added to cart");
+    toast.success("added to cart");
   };
 
   const deleteProduct = (id) => {
@@ -46,7 +47,24 @@ const Product = ({prodata, filterProduct }) => {
         <Card.Text>
           <strong>Rs. {prodata.price}</strong>
         </Card.Text>
-        <Button>Add to Cart</Button>
+        <div className="d-flex">
+          <Button className="m-1 btn btn-dark" onClick={() => addToCart()}>
+            Add to Cart
+          </Button>
+          {isAdmin() && (
+            <>
+              <Button className="m-1" onClick={() => editProductClick()}>
+                Edit
+              </Button>
+              <Button
+                className="m-1 btn btn-danger"
+                onClick={() => deleteProduct(prodata._id)}
+              >
+                Delete
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </Card>
   );

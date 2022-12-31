@@ -1,75 +1,74 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, ListGroup, Card, Badge, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, product: action.payload, loading: false };
-    case "FETCH_FAIL":
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
+const getProdById = async (id) => {
+  console.log(id);
+  const apiURL = `http://localhost:8000/api/v1/products/${id}`;
+  console.log("jjjjjjjjjjjjjjjjjjjjjjjj");
+  const res = await axios.get(`${apiURL}`);
+  console.log(res);
+  const { data } = res;
+  return data.prodata;
 };
 
-export const ProductScreen = () => {
+export const ProductScreen = ({ prodata }) => {
   const params = useParams();
-  const { id } = params;
-
-  const [{ loading, error, product }, dispatch] = useReducer(reducer, {
-    product: [],
-    loading: true,
-    error: "",
-  });
+  const [productData, setProductData] = useState(prodata);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("Effect running");
-    const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
-      try {
-        const result = await axios.get(`/api/product/${id}`);
-        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-      } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
-      }
+    setIsLoading(true);
+    const fetchProductData = async () => {
+      const data = await getProdById(params?.id);
+      setProductData(data);
     };
-    fetchData();
-  }, [id]);
-  return loading ? (
-    <div>Loading...</div>
-  ) : error ? (
-    <div>{error}</div>
-  ) : (
+
+    fetchProductData();
+    setIsLoading(false);
+  }, [params]);
+
+  if (isLoading) {
+    return <p>Fetching product</p>;
+  }
+
+  if (!productData) {
+    return <p>No Product found</p>;
+  }
+
+  return (
     <div className="p-4">
       <Row>
         <Col md={6}>
           <img
             className="image_large"
-            src={product.image}
-            alt={product.image}
+            src={productData.imageURL}
+            alt={productData}
           />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Helmet>
-                <title>{product.name}</title>
+                <title>{productData.name}</title>
               </Helmet>
-              <h2>{product.name}</h2>
+              <h2>{productData.name}</h2>
             </ListGroup.Item>
             <ListGroup.Item>
               <h5>
-                Price: <strong>Rs.{product.price}</strong>
+                Price: <strong>Rs.{productData.price}</strong>
               </h5>
             </ListGroup.Item>
             {/* <hr /> */}
             <ListGroup.Item>
-              <p className="desc_style">Description: {product.description}</p>
+              <b className="desc_style">Category: {productData.category}</b>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <p className="desc_style">
+                Description: {productData.description}
+              </p>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -81,7 +80,7 @@ export const ProductScreen = () => {
                   <Row>
                     <Col>
                       <h5>
-                        Price: <strong>Rs.{product.price}</strong>
+                        Price: <strong>Rs.{productData.price}</strong>
                       </h5>
                     </Col>
                   </Row>
@@ -92,7 +91,7 @@ export const ProductScreen = () => {
                       <h3>Status</h3>
                     </Col>
                     <Col>
-                      {product.countInStock > 0 ? (
+                      {productData.availableItems > 0 ? (
                         <h3>
                           <Badge className="md" bg="success">
                             Available
@@ -108,7 +107,7 @@ export const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {product.countInStock > 0 && (
+                {productData.availableItems > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid gap-2">
                       <Button variant="primary" size="lg">
