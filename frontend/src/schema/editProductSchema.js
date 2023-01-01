@@ -7,12 +7,11 @@ export const editProductSchema = Yup.object().shape({
     .max(30)
     .matches("[a-zA-Z]+", "Only string are allowed")
     .required("Please enter product caegory"),
-  price: Yup.string()
+  price: Yup.number()
     .positive()
     .integer()
     .min(1)
     .max(10)
-    .matches("[0-9]+", "Only numbers are allowed")
     .required("Please enter price in Number only"),
   description: Yup.string()
     .min(4)

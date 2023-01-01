@@ -112,15 +112,21 @@ export const ProductScreen = ({ prodata }) => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {productData.availableItems > 0 && (
+                {productData.availableItems > 0 ? (
                   <ListGroup.Item>
                     <div className="d-grid gap-2">
-                      <Button variant="primary" size="lg" onClick={() => addToCart()}>
+                      <Button variant="warning" size="lg" onClick={() => addToCart()}>
                         Add to Cart
                       </Button>
                     </div>
                   </ListGroup.Item>
-                )}
+                ):<ListGroup.Item>
+                <div className="d-grid gap-2">
+                  <Button variant="warning" size="lg" onClick={() => addToCart()} disabled>
+                    Add to Cart
+                  </Button>
+                </div>
+              </ListGroup.Item>}
               </ListGroup>
             </Card.Body>
           </Card>
