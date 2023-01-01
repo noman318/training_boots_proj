@@ -42,13 +42,13 @@ export default function Registration() {
       .then((res) => {
         console.log(res);
         // eslint-disable-next-line eqeqeq
-        if (res.data.err == 0) {
+        if (res.status == 200) {
           setState({ ...state, succMsg: res.data.msg });
           toast.success('Registered Successfully');
           navigate('/login')
         }
         // eslint-disable-next-line eqeqeq
-        if (res.data.err == 1) {
+        if (res.status == 404) {
           setState({ ...state, errMsg: res.data.msg });
           toast.error(res.data.msg);
         }

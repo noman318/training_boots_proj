@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import EditProduct from "./components/EditProduct";
 import { isAdmin, isLoggedIn } from "./services/MyData";
 import { Navigate } from "react-router-dom";
+import { CartScreen } from "./Screens/CartScreen";
 
 function App() {
   const ProtectRoute = ({ children }) => {
@@ -46,13 +47,14 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:id" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path="/editproduct/:id" element={
-              <ProtectAdminRoute>
+              <ProtectRoute>
               <EditProduct />
-              </ProtectAdminRoute>} />
+              </ProtectRoute>} />
               <Route path="/addproduct" element={
-              <ProtectAdminRoute>
-              <AddProduct /></ProtectAdminRoute>} />
+              <ProtectRoute>
+              <AddProduct /></ProtectRoute>} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/login" element={<Login />} />
             </Routes>

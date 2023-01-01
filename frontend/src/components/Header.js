@@ -1,5 +1,6 @@
 import Container from "react-bootstrap/Container";
 import { Nav, Navbar } from "react-bootstrap";
+// eslint-disable-next-line no-unused-vars
 import { isAdmin, isLoggedIn, doLogout } from "../services/MyData";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -32,13 +33,13 @@ function Header() {
                 <LinkContainer to="/login" onClick={() => doLogout()}>
                   <Nav.Link>Log Out</Nav.Link>
                 </LinkContainer>
-                {isAdmin() && (
+                
                   <Nav className="me-auto">
                     <LinkContainer to="/addproduct">
                       <Nav.Link>AddProduct</Nav.Link>
                     </LinkContainer>
                   </Nav>
-                )}
+                
               </Nav>
             )}
           </Navbar.Collapse>

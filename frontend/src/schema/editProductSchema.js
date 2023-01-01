@@ -15,7 +15,7 @@ export const editProductSchema = Yup.object().shape({
     .required("Please enter price in Number only"),
   description: Yup.string()
     .min(4)
-    .max(50)
+    .max(500)
     .required("Please enter product description"),
   manufacturer: Yup.string()
     .min(3)
