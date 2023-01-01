@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const addProductSchema = Yup.object().shape({
+export const editProductSchema = Yup.object().shape({
   name: Yup.string().min(3).max(30).required("Please enter product name"),
   category: Yup.string()
     .min(1)

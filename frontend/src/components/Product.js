@@ -48,9 +48,6 @@ const Product = ({ prodata, filterProduct }) => {
           <strong>Rs. {prodata.price}</strong>
         </Card.Text>
         <div className="d-flex">
-          <Button className="m-1 btn btn-dark" onClick={() => addToCart()}>
-            Add to Cart
-          </Button>
           {isAdmin() && (
             <>
               <Button className="m-1" onClick={() => editProductClick()}>

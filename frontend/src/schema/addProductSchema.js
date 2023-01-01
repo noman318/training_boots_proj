@@ -6,10 +6,8 @@ export const addProductSchema = Yup.object().shape({
     .min(1)
     .max(30)
     .matches("[a-zA-Z]+", "Only string are allowed")
-    .required("Please enter product caegory"),
+    .required("Please enter product category"),
   price: Yup.string()
-    // .positive()
-    // .integer()
     .min(1)
     .max(10)
     .matches("[0-9]+", "Only numbers are allowed")

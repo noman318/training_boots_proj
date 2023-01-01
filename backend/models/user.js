@@ -38,7 +38,7 @@ const User = mongoose.model(
         default: USER,
       },
       phone: {
-        type: Number,
+        type: String,
         min: 1000000000,
         unique: true,
       },

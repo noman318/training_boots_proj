@@ -4,9 +4,30 @@ import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../services/MyData";
+import { useFormik } from 'formik'
+import { addProductSchema } from "../schema/addProductSchema";
+
+const initialValues = {
+  availableItems: 0,
+  manufacturer: "",
+  description: "",
+  price:1,
+  category:"",
+  name:'',
+  image:null
+};
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const { values, errors, touched,handleBlur, handleChange } = useFormik({
+    initialValues: initialValues,
+    validationSchema: addProductSchema,
+    onSubmit: (values) => {
+      console.log(initialValues);
+      console.log(values);
+      // console.log(initialValues);
+    },
+  });
   const [state, setState] = useState({
     errMsg: "",
     succMsg: "",
@@ -71,7 +92,12 @@ export default function AddProduct() {
             placeholder="Product name"
             name="name"
             required
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.name && touched.name?
+                <p className='text-danger'>{errors.name}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
@@ -82,17 +108,28 @@ export default function AddProduct() {
             placeholder="Product category"
             name="category"
             required
+            value={values.category}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.category && touched.category?
+                <p className='text-danger'>{errors.category}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPrice">
           <Form.Label className="form_label">Product Price: </Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Product Price"
             name="price"
             required
+            min={1}
+            value={values.price}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.price && touched.price?
+                <p className='text-danger'>{errors.price}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicDesc">
@@ -102,7 +139,12 @@ export default function AddProduct() {
             placeholder="Product Description"
             name="description"
             required
+            value={values.description}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.description && touched.description?
+                <p className='text-danger'>{errors.description}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicManufac">
@@ -112,7 +154,12 @@ export default function AddProduct() {
             placeholder="Product Manufacturer"
             name="manufacturer"
             required
+            value={values.manufacturer}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.manufacturer && touched.manufacturer?
+                <p className='text-danger'>{errors.manufacturer}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicAvilable">
@@ -120,11 +167,16 @@ export default function AddProduct() {
             Product Available Items:{" "}
           </Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Product Available Items"
             name="availableItems"
             required
+            value={values.availableItems}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+           {errors.availableItems && touched.availableItems?
+                <p className='text-danger'>{errors.availableItems}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -135,7 +187,10 @@ export default function AddProduct() {
             name="image"
             onChange={uploadImage}
             required
-          />
+            value={values.image}
+          /> {errors.image && touched.image?
+            <p className='text-danger'>{errors.image}</p>:''}
+
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 

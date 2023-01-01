@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -10,8 +11,20 @@ import AddProduct from "./components/AddProduct";
 import Registration from "./components/Registration";
 import Login from "./components/Login";
 import EditProduct from "./components/EditProduct";
+import { isAdmin, isLoggedIn } from "./services/MyData";
+import { Navigate } from "react-router-dom";
 
 function App() {
+  const ProtectRoute = ({ children }) => {
+    const auth = isLoggedIn();
+    return auth ? children : <Navigate to="/" />;
+  };
+
+  const ProtectAdminRoute = ({ children }) => {
+    const auth = isLoggedIn();
+    const adminAuth = isAdmin();
+    return auth && adminAuth ? children : <Navigate to="/" />;
+  };
   return (
     <>
       <Router>
@@ -28,13 +41,18 @@ function App() {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              theme="light"
+              theme="dark"
             />
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:id" element={<ProductScreen />} />
-              <Route path="/editproduct/:id" element={<EditProduct />} />
-              <Route path="/addproduct" element={<AddProduct />} />
+              <Route path="/editproduct/:id" element={
+              <ProtectAdminRoute>
+              <EditProduct />
+              </ProtectAdminRoute>} />
+              <Route path="/addproduct" element={
+              <ProtectAdminRoute>
+              <AddProduct /></ProtectAdminRoute>} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/login" element={<Login />} />
             </Routes>

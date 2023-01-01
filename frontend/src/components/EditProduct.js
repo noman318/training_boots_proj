@@ -6,8 +6,30 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { editProduct } from "../services/MyData";
+import { useFormik } from 'formik'
+import { editProductSchema } from "../schema/editProductSchema";
+
+const initialValues = {
+  availableItems: 0,
+  manufacturer: "",
+  description: "",
+  price:1,
+  category:"",
+  name:'',
+  image:null
+};
 
 export default function EditProduct() {
+
+  const { values, errors, touched,handleBlur, handleChange } = useFormik({
+    initialValues: initialValues,
+    validationSchema: editProductSchema,
+    onSubmit: (values) => {
+      console.log(initialValues);
+      console.log(values);
+      // console.log(initialValues);
+    },
+  });
   const getProdById = async (id) => {
     console.log(id);
     const apiURL = `http://localhost:8000/api/v1/products/${id}`;
@@ -124,7 +146,12 @@ export default function EditProduct() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            onBlur={handleBlur}
           />
+          {errors.name && touched.name?
+            <p className='text-danger'>{errors.name}</p>:''}
+                     {errors.name && touched.name?
+                <p className='text-danger'>{errors.name}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 
@@ -137,7 +164,10 @@ export default function EditProduct() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
+            onBlur={handleBlur}
           />
+          {errors.category && touched.category?
+            <p className='text-danger'>{errors.category}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -149,7 +179,10 @@ export default function EditProduct() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            onBlur={handleBlur}
           />
+          {errors.price && touched.price?
+            <p className='text-danger'>{errors.price}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -161,7 +194,10 @@ export default function EditProduct() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            onBlur={handleBlur}
           />
+          {errors.description && touched.description?
+            <p className='text-danger'>{errors.description}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -173,7 +209,10 @@ export default function EditProduct() {
             value={manufacturer}
             onChange={(e) => setManufacturer(e.target.value)}
             required
+            onBlur={handleBlur}
           />
+          {errors.manufacturer && touched.manufacturer?
+            <p className='text-danger'>{errors.manufacturer}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -183,9 +222,12 @@ export default function EditProduct() {
             placeholder="Enter Product Available Items"
             name="availableItems"
             required
+            onBlur={handleBlur}
             value={availableItems}
             onChange={(e) => setAvailableItems(e.target.value)}
           />
+          {errors.availableItems && touched.availableItems?
+            <p className='text-danger'>{errors.availableItems}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -197,6 +239,8 @@ export default function EditProduct() {
             onChange={uploadImage}
             // required
           />
+          {errors.image && touched.image?
+            <p className='text-danger'>{errors.image}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
 

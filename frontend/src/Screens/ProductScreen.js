@@ -3,6 +3,7 @@ import { Col, Row, ListGroup, Card, Badge, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import { toast } from "react-toastify";
 
 const getProdById = async (id) => {
   console.log(id);
@@ -37,6 +38,10 @@ export const ProductScreen = ({ prodata }) => {
   if (!productData) {
     return <p>No Product found</p>;
   }
+  const addToCart = () => {
+    console.log("added to cart");
+    toast.success("added to cart");
+  };
 
   return (
     <div className="p-4">
@@ -110,7 +115,7 @@ export const ProductScreen = ({ prodata }) => {
                 {productData.availableItems > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid gap-2">
-                      <Button variant="primary" size="lg">
+                      <Button variant="primary" size="lg" onClick={() => addToCart()}>
                         Add to Cart
                       </Button>
                     </div>
