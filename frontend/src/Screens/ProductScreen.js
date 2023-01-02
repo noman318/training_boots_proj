@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Col, Row, ListGroup, Card, Badge, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { Col, Row, ListGroup, Card, Badge, Button, Form } from "react-bootstrap";
+import { useParams,useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
@@ -13,28 +11,32 @@ import { listProductDetails } from "../actions/productActions";
 
 export const ProductScreen = () => {
 
-  const params = useParams();
-  console.log('params :>> ', params.id);
-  const singleParams = params.id
-  console.log("singleParams", singleParams);
+  const navigate = useNavigate()
+  // console.log("navigate", navigate);
   
+  const params = useParams();
+  // console.log('params :>> ', params.id);
+  const singleParams = params.id
+  // console.log("singleParams", singleParams);
+  
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch()
 
   const productDetails = useSelector(state => state.productDetails)
-  console.log('productDetails :>> ', productDetails);
 
   const {loading, error, product} = productDetails
 
   useEffect(() => {
     dispatch(listProductDetails(singleParams))
-    console.log("dispatch", dispatch);
+    // console.log("dispatch", dispatch);
   }, [dispatch,singleParams]);
 
-  const addToCart = () => {
-    console.log("added to cart");
+  const addToCartHandler =()=>{
+    console.log('add to cart handler')
+    navigate(`/cart/${singleParams}?qty=${qty}`)
     toast.success("added to cart");
-  };
+  }
 
   return (
     <div className="p-4">
@@ -89,7 +91,7 @@ export const ProductScreen = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col className="badge_text">
-                      <h3>Status</h3>
+                      Status
                     </Col>
                     <Col>
                       {product.countInStock > 0 ? (
@@ -108,21 +110,42 @@ export const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {product.countInStock > 0 ? (
+                {product.countInStock >0 && (
                   <ListGroup.Item>
-                    <div className="d-grid gap-2">
-                      <Button variant="warning" size="lg" onClick={() => addToCart()}>
-                        Add to Cart
-                      </Button>
-                    </div>
+                    <Row>
+                      <Col>Quantity</Col>
+                      <Col>
+                        <Form.Control
+                            as='select'
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                      </Col>
+                    </Row>
                   </ListGroup.Item>
-                ):<ListGroup.Item>
-                <div className="d-grid gap-2">
-                  <Button variant="warning" size="lg" onClick={() => addToCart()} disabled>
-                    Add to Cart
-                  </Button>
-                </div>
-              </ListGroup.Item>}
+                )}
+                <ListGroup.Item>
+                  <div className="d-grid gap-2">
+                    <Button
+                      onClick={addToCartHandler}
+                      className='btn-block'
+                      type='button'
+                      variant="warning"
+                      size="lg"
+                      disabled={product.countInStock === 0}
+                    >
+                      Add To Cart
+                    </Button>
+                  </div>
+                  </ListGroup.Item>
               </ListGroup>
             </Card.Body>
           </Card>

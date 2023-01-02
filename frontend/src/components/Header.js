@@ -1,51 +1,64 @@
 import Container from "react-bootstrap/Container";
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 // eslint-disable-next-line no-unused-vars
 import { isAdmin, isLoggedIn, doLogout } from "../services/MyData";
 import { LinkContainer } from "react-router-bootstrap";
 
 function Header() {
+  const logoutHandler = () => {
+    console.log('logout')
+  }
+
   return (
-    <div className="d-flex flex-column site_container">
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <LinkContainer to={"/"}>
+    <header>
+          <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect styles={{paddingTop:'0.2px', paddingBottom:'0.7px'}}>
+        <Container>            
+          <LinkContainer to='/'>
             <Navbar.Brand>MyStore</Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            {!isLoggedIn() && (
-              <Nav className="ml-auto">
-                <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
+          <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <Navbar.Collapse id='basic-navbar-nav'>
+            {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
+            <Nav className='ms-auto'>
+              <LinkContainer to='/cart'>
+                <Nav.Link>
+                  <i className='fas fa-shopping-cart'></i> Cart
+                </Nav.Link>
+              </LinkContainer>
+              
+                {/* <NavDropdown>
+                  <LinkContainer to='/profile'>
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown> */}
+             
+                <LinkContainer to='/login'>
+                  <Nav.Link>
+                    <i className='fas fa-user'></i> Sign In
+                  </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/registration">
-                  <Nav.Link>SignUp</Nav.Link>
-                </LinkContainer>
-              </Nav>
-            )}
-
-            {isLoggedIn() && (
-              <Nav className="ml-auto">
-                <LinkContainer to="/cart">
-                  <Nav.Link>Cart</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/login" onClick={() => doLogout()}>
-                  <Nav.Link>Log Out</Nav.Link>
-                </LinkContainer>
-                
-                  <Nav className="me-auto">
-                    <LinkContainer to="/addproduct">
-                      <Nav.Link>AddProduct</Nav.Link>
-                    </LinkContainer>
-                  </Nav>
-                
-              </Nav>
-            )}
+            
+{/*               
+                <NavDropdown title='Admin' id='adminmenu'>
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/productlist'>
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/orderlist'>
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown> */}
+          
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+    </header>
   );
 }
 
