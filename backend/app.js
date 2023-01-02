@@ -44,7 +44,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 app.use(notFound)
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 8000
+const PORT = 8000
 
 app.listen(
   PORT,
