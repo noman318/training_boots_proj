@@ -1,12 +1,20 @@
 import Container from "react-bootstrap/Container";
+import {useDispatch, useSelector} from 'react-redux'
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 // eslint-disable-next-line no-unused-vars
 import { isAdmin, isLoggedIn, doLogout } from "../services/MyData";
 import { LinkContainer } from "react-router-bootstrap";
+import { logout } from "../actions/userActions";
 
 function Header() {
+
+  // eslint-disable-next-line no-unused-vars
+  const dispatch = useDispatch()
+  const userLogin = useSelector(state => state.userLogin)
+  const {userInfo} = userLogin
+  
   const logoutHandler = () => {
-    console.log('logout')
+   dispatch(logout())
   }
 
   return (
@@ -26,20 +34,21 @@ function Header() {
                 </Nav.Link>
               </LinkContainer>
               
-                {/* <NavDropdown>
-                  <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
+              {userInfo ? (
+                <NavDropdown title={userInfo.firstName} id='username' >
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout
                   </NavDropdown.Item>
-                </NavDropdown> */}
-             
+                </NavDropdown> 
+                
+              ):
+              
                 <LinkContainer to='/login'>
                   <Nav.Link>
                     <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
+              }
             
 {/*               
                 <NavDropdown title='Admin' id='adminmenu'>

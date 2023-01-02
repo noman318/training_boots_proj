@@ -14,6 +14,8 @@ import EditProduct from "./components/EditProduct";
 import { isAdmin, isLoggedIn } from "./services/MyData";
 import { Navigate } from "react-router-dom";
 import { CartScreen } from "./Screens/CartScreen";
+import LoginScreen from "./Screens/LoginScreen";
+import RegistrationScreen from "./Screens/RegistrationScreen";
 
 function App() {
   const ProtectRoute = ({ children }) => {
@@ -47,16 +49,9 @@ function App() {
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:id" element={<ProductScreen />} />
+              <Route path="/login" element={<LoginScreen />} />
+              <Route path="/register" element={<RegistrationScreen />} />
               <Route path="/cart/:id?" element={<CartScreen />} />
-              <Route path="/editproduct/:id" element={
-              <ProtectRoute>
-              <EditProduct />
-              </ProtectRoute>} />
-              <Route path="/addproduct" element={
-              <ProtectRoute>
-              <AddProduct /></ProtectRoute>} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="/login" element={<Login />} />
             </Routes>
           </Container>
         </main>

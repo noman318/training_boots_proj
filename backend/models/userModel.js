@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      min: 1000000000,
+      minLength: 1000000000,
+      maxLength: 9999999999,
       unique: true,
     },
     isAdmin: {
