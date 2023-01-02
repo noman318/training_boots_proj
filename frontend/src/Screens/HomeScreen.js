@@ -6,50 +6,39 @@ import { Col, Row } from "react-bootstrap";
 import { getProducts } from "../services/MyData";
 import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 export const HomeScreen = () => {
-  // const [proData, setProData] = useState([]);
-  // console.log(proData);
-  // useEffect(() => {
-  //   getProducts()
-  //     .then((res) => {
-  //       if (res.data.err == 0) {
-  //         console.log(res.data);
-  //         setProData(res.data.prodata);
-  //       }
-  //     })
-  //     .catch((err) => {});
-  // }, []);
   
   const filterProduct = (deletedId) => {
-    let data = prodata?.prodata?.filter((prodata) => prodata._id !== deletedId);
-    prodata([...data]);
+    let data = products?.products?.filter((products) => products._id !== deletedId);
+    products([...data]);
   };
   const dispatch = useDispatch()
   const productList = useSelector(state => state.productList)
-  const {loading, error, prodata} = productList
+  const {loading, error, products} = productList
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch]);
 
-  console.log("prodata =>", prodata);
+  console.log("products =>", products);
 
   return (
     <div>
       <h2>Featured products</h2>
+      {loading ? <Loader /> : error? <Message>{error}</Message> :
+      
       <div>
-        <Row>
-          {prodata?.prodata?.map((pro) => (
-            <Col key={pro._id} sm={6} md={4} lg={3} className="mb-3">
-              <Product
-                prodata={pro}
-                // setProData={setProData}
-                filterProduct={filterProduct}
-              />
-            </Col>
-          ))}
-        </Row>
+      <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
       </div>
+      }
     </div>
   );
 };

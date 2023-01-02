@@ -20,7 +20,7 @@ export const addProductSchema = Yup.object().shape({
     .min(3)
     .max(50)
     .required("Please enter product manufaturer"),
-  availableItems: Yup.number()
+  countInStock: Yup.number()
     .positive()
     .integer()
     .required("Please enter price in Number only"),

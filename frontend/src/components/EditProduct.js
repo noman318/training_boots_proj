@@ -10,7 +10,7 @@ import { useFormik } from 'formik'
 import { editProductSchema } from "../schema/editProductSchema";
 
 const initialValues = {
-  availableItems: 0,
+  countInStock: 0,
   manufacturer: "",
   description: "",
   price:1,
@@ -32,7 +32,7 @@ export default function EditProduct() {
   });
   const getProdById = async (id) => {
     console.log(id);
-    const apiURL = `http://localhost:8000/api/v1/products/${id}`;
+    const apiURL = `http://localhost:8000/api/products/${id}`;
     console.log("jjjjjjjjjjjjjjjjjjjjjjjj");
     const res = await axios.get(`${apiURL}`);
     console.log(res);
@@ -46,7 +46,7 @@ export default function EditProduct() {
   const [price, setPrice] = useState(0);
   const [manufacturer, setManufacturer] = useState("");
   const [category, setCategory] = useState("");
-  const [availableItems, setAvailableItems] = useState(0);
+  const [countInStock, setcountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
   const [state, setState] = useState({
@@ -65,13 +65,13 @@ export default function EditProduct() {
         price,
         description,
         category,
-        availableItems,
+        countInStock,
         manufacturer,
       } = data;
       setName(name);
       setPrice(price);
       setCategory(category);
-      setAvailableItems(availableItems);
+      setcountInStock(countInStock);
       setManufacturer(manufacturer);
       setDescription(description);
     };
@@ -111,7 +111,7 @@ export default function EditProduct() {
         senddata.append("price", data.get("price"));
         senddata.append("description", data.get("description"));
         senddata.append("manufacturer", data.get("manufacturer"));
-        senddata.append("availableItems", data.get("availableItems"));
+        senddata.append("countInStock", data.get("countInStock"));
         senddata.append("attach", state.imagePath);
         console.log("moin");
         editProduct(params?.id, senddata).then((res) => {
@@ -220,14 +220,14 @@ export default function EditProduct() {
           <Form.Control
             type="text"
             placeholder="Enter Product Available Items"
-            name="availableItems"
+            name="countInStock"
             required
             onBlur={handleBlur}
-            value={availableItems}
-            onChange={(e) => setAvailableItems(e.target.value)}
+            value={countInStock}
+            onChange={(e) => setcountInStock(e.target.value)}
           />
-          {errors.availableItems && touched.availableItems?
-            <p className='text-danger'>{errors.availableItems}</p>:''}
+          {errors.countInStock && touched.countInStock?
+            <p className='text-danger'>{errors.countInStock}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">

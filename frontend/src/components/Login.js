@@ -34,9 +34,6 @@ export default function Login() {
           setErrMsg(res.data.msg);
           console.log("res.data.msg", res.data.msg);
           toast.error(res.data.msg);
-          setTimeout(() => {
-            // navigate("/registration");
-          }, 3000);
         }
       })
       .catch((err) => console.log(err));

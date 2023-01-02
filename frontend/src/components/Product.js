@@ -5,11 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { isAdmin, deleteProducts } from "../services/MyData";
 import { toast } from "react-toastify";
 
-const Product = ({ prodata, filterProduct }) => {
+const Product = ({ product}) => {
   const navigate = useNavigate();
 
   const editProductClick = (_id) => {
-    navigate(`/editproduct/${prodata._id}`);
+    navigate(`/editproduct/${product._id}`);
   };
 
   const addToCart = () => {
@@ -24,28 +24,27 @@ const Product = ({ prodata, filterProduct }) => {
         if (res.data) {
           console.log("res.data", res.data);
           toast.error("Product Deleted");
-          filterProduct(id);
         }
       });
     }
   };
   return (
     <Card>
-      <Link to={`/product/${prodata._id}`}>
+      <Link to={`/product/${product._id}`}>
         <Card.Img
           className="card-img-top width"
-          src={prodata.imageURL}
-          alt={prodata.name}
+          src={product.image}
+          alt={product.name}
         />
       </Link>
       <Card.Body>
-        <Link to={`/product/${prodata._id}`}>
-          <Card.Title>{prodata.name}</Card.Title>
+        <Link to={`/product/${product._id}`}>
+          <Card.Title>{product.name}</Card.Title>
         </Link>
       </Card.Body>
       <div className="product_info">
         <Card.Text>
-          <strong>Rs. {prodata.price}</strong>
+          <strong>Rs. {product.price}</strong>
         </Card.Text>
         <div className="d-flex">
           {isAdmin() && (
@@ -55,7 +54,7 @@ const Product = ({ prodata, filterProduct }) => {
               </Button>
               <Button
                 className="m-1 btn btn-danger"
-                onClick={() => deleteProduct(prodata._id)}
+                onClick={() => deleteProduct(product._id)}
               >
                 Delete
               </Button>

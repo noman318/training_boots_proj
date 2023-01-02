@@ -1,33 +1,54 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const routes = require("./index");
-const app = express();
+import path from 'path'
+import express from 'express'
+import dotenv from 'dotenv'
+import colors from 'colors'
+import morgan from 'morgan'
+import cors from 'cors'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+import connectDB from './config/db.js'
+import productRoutes from './routes/productRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
-app.use(cors());
-app.use(express.json());
-const corsOptions = {
-  exposedHeaders: ["x-auth-token", "Authorization"],
-};
+dotenv.config()
 
-app.use(cors(corsOptions));
+connectDB()
 
-const connectionString = "mongodb://localhost:27017/myTrainProj";
+const app = express()
 
-mongoose
-  .connect(connectionString, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
+app.use(express.json())
+app.use(cors())
+app.use('/api/products', productRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
+
+// app.get('/api/config/paypal', (req, res) =>
+//   res.send(process.env.PAYPAL_CLIENT_ID)
+// )
+
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
+
+  app.get('/', (req, res) => {
+    res.send('API is running....')
   })
-  .then((res) => console.log("Connected to db successfully"))
-  .catch((err) => console.log(err));
 
-app.use("/Images", express.static("uploads"));
 
-app.get("/api", (req, res) => {
-  res.send("testing");
-});
-app.use("/", routes);
+app.use(notFound)
+app.use(errorHandler)
 
-app.listen(8000, () => console.log("Listening on port 8000"));
+const PORT = process.env.PORT || 8000
+
+app.listen(
+  PORT,
+  console.log(
+    `Server running on port ${PORT}`.yellow.bold
+  )
+)

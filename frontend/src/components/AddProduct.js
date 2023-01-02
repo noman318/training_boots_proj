@@ -8,7 +8,7 @@ import { useFormik } from 'formik'
 import { addProductSchema } from "../schema/addProductSchema";
 
 const initialValues = {
-  availableItems: 0,
+  countInStock: 0,
   manufacturer: "",
   description: "",
   price:1,
@@ -57,7 +57,7 @@ export default function AddProduct() {
         senddata.append("price", data.get("price"));
         senddata.append("description", data.get("description"));
         senddata.append("manufacturer", data.get("manufacturer"));
-        senddata.append("availableItems", data.get("availableItems"));
+        senddata.append("countInStock", data.get("countInStock"));
         senddata.append("attach", state.imagePath);
         addProduct(senddata).then((res) => {
           if (res?.data.err == 0) {
@@ -169,14 +169,14 @@ export default function AddProduct() {
           <Form.Control
             type="number"
             placeholder="Product Available Items"
-            name="availableItems"
+            name="countInStock"
             required
-            value={values.availableItems}
+            value={values.countInStock}
             onChange={handleChange}
             onBlur={handleBlur}
           />
-           {errors.availableItems && touched.availableItems?
-                <p className='text-danger'>{errors.availableItems}</p>:''}
+           {errors.countInStock && touched.countInStock?
+                <p className='text-danger'>{errors.countInStock}</p>:''}
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
