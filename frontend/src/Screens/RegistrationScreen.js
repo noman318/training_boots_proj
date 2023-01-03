@@ -3,7 +3,7 @@ import { Form, Button,Row,Col } from "react-bootstrap";
 // import { registrationSchema } from "../schema/registrationSchema";
 import {useDispatch,useSelector} from 'react-redux'
 // import { useFormik } from 'formik'
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate,Link ,useLocation} from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { register } from "../actions/userActions";
@@ -19,16 +19,20 @@ export default function RegistrationScreen() {
     const [message, setMessage] = useState(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const location =  useLocation()
+
 
     const userRegister = useSelector((state) => state.userRegister)
   const { loading, error, userInfo } = userRegister
 
+  const redirect = location.search ? location.search.split('=')[1] : '/'
+
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/login')
+      navigate(redirect)
     }
-  }, [navigate, userInfo])
+  }, [navigate, userInfo,redirect])
 
 
     // eslint-disable-next-line no-unused-vars

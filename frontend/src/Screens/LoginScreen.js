@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useLocation } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -13,17 +13,18 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('')
   
     const dispatch = useDispatch()
+    const location = useLocation()
     
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo, loading, error} = userLogin
     
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect(()=>{
         if(userInfo){
-            navigate('/')
+            navigate(redirect)
           }
-        },[userInfo,navigate])
+        },[userInfo,navigate,redirect])
         
         const submitHandler = (e) => {
           e.preventDefault()
@@ -40,7 +41,7 @@ const LoginScreen = () => {
           <Form.Control
             type='email'
             placeholder='Enter email'
-            autoComplete='off'
+            autoComplete='off '
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
