@@ -17,6 +17,7 @@ import { CartScreen } from "./Screens/CartScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import ProductListScreen from "./Screens/ProductListScreen";
+import ProductEditScreen from "./Screens/ProductEditScreen";
 
 function App() {
   const ProtectRoute = ({ children }) => {
@@ -55,6 +56,10 @@ function App() {
               <Route
                 path="/admin/productlist"
                 element={<ProductListScreen />}
+              />
+               <Route
+                path="/admin/product/:id/edit"
+                element={<ProductEditScreen />}
               />
               <Route path="/cart/:id?" element={<CartScreen />} />
             </Routes>
