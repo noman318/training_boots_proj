@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { isAdmin, deleteProducts } from "../services/MyData";
 import { toast } from "react-toastify";
 
-const Product = ({ product}) => {
+const Product = ({ product }) => {
   const navigate = useNavigate();
 
   const editProductClick = (_id) => {
@@ -46,7 +46,7 @@ const Product = ({ product}) => {
         <Card.Text>
           <strong>Rs. {product.price}</strong>
         </Card.Text>
-        <div className="d-flex">
+        {/* <div className="d-flex">
           {isAdmin() && (
             <>
               <Button className="m-1" onClick={() => editProductClick()}>
@@ -60,7 +60,7 @@ const Product = ({ product}) => {
               </Button>
             </>
           )}
-        </div>
+        </div> */}
       </div>
     </Card>
   );
