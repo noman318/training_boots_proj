@@ -7,10 +7,7 @@ import { Container } from "react-bootstrap";
 import { HomeScreen } from "./Screens/HomeScreen";
 import { ToastContainer } from "react-toastify";
 import { ProductScreen } from "./Screens/ProductScreen";
-import AddProduct from "./components/AddProduct";
-import Registration from "./components/Registration";
-import Login from "./components/Login";
-import EditProduct from "./components/EditProduct";
+import { Helmet } from "react-helmet-async";
 import { isAdmin, isLoggedIn } from "./services/MyData";
 import { Navigate } from "react-router-dom";
 import { CartScreen } from "./Screens/CartScreen";
@@ -48,6 +45,9 @@ function App() {
               pauseOnHover
               theme="dark"
             />
+            <Helmet>
+              <title>MyStore</title>
+            </Helmet>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:id" element={<ProductScreen />} />
@@ -57,7 +57,7 @@ function App() {
                 path="/admin/productlist"
                 element={<ProductListScreen />}
               />
-               <Route
+              <Route
                 path="/admin/product/:id/edit"
                 element={<ProductEditScreen />}
               />

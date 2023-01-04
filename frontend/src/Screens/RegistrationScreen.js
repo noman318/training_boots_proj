@@ -1,65 +1,66 @@
-import React, { useState,useEffect } from "react";
-import { Form, Button,Row,Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 // import { registrationSchema } from "../schema/registrationSchema";
-import {useDispatch,useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 // import { useFormik } from 'formik'
-import { useNavigate,Link ,useLocation} from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { register } from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
+import { Helmet } from "react-helmet-async";
 
 export default function RegistrationScreen() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [message, setMessage] = useState(null)
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const location =  useLocation()
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
-    const userRegister = useSelector((state) => state.userRegister)
-  const { loading, error, userInfo } = userRegister
-
-  const redirect = location.search ? location.search.split('=')[1] : '/'
-
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect)
+      navigate(redirect);
     }
-  }, [navigate, userInfo,redirect])
+  }, [navigate, userInfo, redirect]);
 
+  // eslint-disable-next-line no-unused-vars
+  // const { errors, touched,handleBlur } = useFormik({
+  //   initialValues: initialValues,
+  //   validationSchema: registrationSchema,
+  //   onSubmit: (values) => {
+  //     console.log(initialValues);
+  //     console.log(values);
+  //   },
+  // });
 
-    // eslint-disable-next-line no-unused-vars
-    // const { errors, touched,handleBlur } = useFormik({
-    //   initialValues: initialValues,
-    //   validationSchema: registrationSchema,
-    //   onSubmit: (values) => {
-    //     console.log(initialValues);
-    //     console.log(values);
-    //   },
-    // });
-
-    const submitHandler = (e) => {
-        e.preventDefault()
-        if (password !== confirmPassword) {
-          setMessage('Passwords do not match')
-        } else {
-          dispatch(register(firstName,lastName,phone, email, password))
-        }
-      }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+    } else {
+      dispatch(register(firstName, lastName, phone, email, password));
+    }
+  };
   return (
-  <FormContainer>
-          <h1>Sign Up</h1>
-      {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
+    <FormContainer>
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
+      <h1>Sign Up</h1>
+      {message && <Message variant="danger">{message}</Message>}
+      {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
-          <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formBasicFname">
           <Form.Label className="form_label">Firts Name: </Form.Label>
           <Form.Control
@@ -101,7 +102,7 @@ export default function RegistrationScreen() {
             placeholder="phone"
             required
             value={phone}
-         onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
@@ -132,14 +133,11 @@ export default function RegistrationScreen() {
           Register
         </Button>
       </Form>
-      <Row className='py-3'>
+      <Row className="py-3">
         <Col>
-          Have an Account?{' '}
-          <Link to={'/login'}>
-            Login
-          </Link>
+          Have an Account? <Link to={"/login"}>Login</Link>
         </Col>
       </Row>
-  </FormContainer>
+    </FormContainer>
   );
 }
