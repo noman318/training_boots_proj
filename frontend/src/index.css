@@ -52,3 +52,13 @@ a {
 .form_label {
   font-size: 1.5rem;
 }
+.link {
+  text-decoration: none;
+  color: black;
+}
+.height {
+  min-height: 30rem;
+}
+.height_Img {
+  height: 17rem;
+}

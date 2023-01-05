@@ -29,38 +29,26 @@ const Product = ({ product }) => {
     }
   };
   return (
-    <Card>
-      <Link to={`/product/${product._id}`}>
+    <Card className="m-2 p-2 height">
+      <Link className="link" to={`/product/${product._id}`}>
         <Card.Img
-          className="card-img-top width"
+          className="card-img-top width height_Img"
           src={product.image}
           alt={product.name}
         />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
+        <Link className="link" to={`/product/${product._id}`}>
           <Card.Title>{product.name}</Card.Title>
         </Link>
       </Card.Body>
       <div className="product_info">
         <Card.Text>
-          <strong>Rs. {product.price}</strong>
+          <h4> {product.brand}</h4>
         </Card.Text>
-        {/* <div className="d-flex">
-          {isAdmin() && (
-            <>
-              <Button className="m-1" onClick={() => editProductClick()}>
-                Edit
-              </Button>
-              <Button
-                className="m-1 btn btn-danger"
-                onClick={() => deleteProduct(product._id)}
-              >
-                Delete
-              </Button>
-            </>
-          )}
-        </div> */}
+        <Card.Text>
+          <h3>₹ {product.price}</h3>
+        </Card.Text>
       </div>
     </Card>
   );

@@ -73,7 +73,7 @@ export const ProductScreen = () => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <h5>
-                  Price: <strong>Rs.{product.price}</strong>
+                  Price: <strong>₹ {product.price}</strong>
                 </h5>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -92,7 +92,7 @@ export const ProductScreen = () => {
                     <Row>
                       <Col>
                         <h5>
-                          Price: <strong>Rs.{product.price}</strong>
+                          Price: <strong>₹ {product.price}</strong>
                         </h5>
                       </Col>
                     </Row>

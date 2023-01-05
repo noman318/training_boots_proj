@@ -53,7 +53,7 @@ export const CartScreen = () => {
   };
 
   return (
-    <Row>
+    <Row className="mt-5">
       <Helmet>
         <title>Cart Screen</title>
       </Helmet>
@@ -72,9 +72,11 @@ export const CartScreen = () => {
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link className="link" to={`/product/${item.product}`}>
+                      {item.name}
+                    </Link>
                   </Col>
-                  <Col md={2}>Rs. {item.price}</Col>
+                  <Col md={2}>₹ {item.price}</Col>
                   <Col md={2}>
                     <Form.Control
                       as="select"
@@ -114,7 +116,7 @@ export const CartScreen = () => {
               SubTotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
               Items
             </h2>
-            Rs.{" "}
+            ₹{" "}
             {cartItems
               .reduce((acc, item) => acc + item.qty * item.price, 0)
               .toFixed(2)}

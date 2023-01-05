@@ -135,7 +135,10 @@ export default function RegistrationScreen() {
       </Form>
       <Row className="py-3">
         <Col>
-          Have an Account? <Link to={"/login"}>Login</Link>
+          Have an Account?{" "}
+          <Link className="link" to={"/login"}>
+            Login
+          </Link>
         </Col>
       </Row>
     </FormContainer>
